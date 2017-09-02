@@ -27,7 +27,7 @@ $app = new Slim\App($configs);
 
 // route untuk url homepage
 $app->get('/', function($req, $res){
-    echo '<h3>Siapa yang maju duluan ?<h3><br><p>Chatbot  untuk melakukan pengurutan nomor siapa yang maju duluan.</p><br/>By RSDH.';
+    echo '<h3>Siapa yang maju duluan ?<h3><p>Chatbot  untuk melakukan pengurutan nomor siapa yang maju duluan.</p><br/>By RSDH.';
 });
 
 // route untuk webhook
