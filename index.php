@@ -64,7 +64,7 @@ $app->post('/webhook', function($request, $response) use ($bot, $pass_signature)
                     // $result = $bot->replyText($event['replyToken'], $event['message']['text']);
 
                     // reply with replyMessage()
-                    $textMessageBuilder = new TextMessageBuilder("Mau tau siapa yang maju duluan ?\\nKirim aja daftar nama - namanya.\\ncontoh : Aziz, Ardika, Fatih.");
+                    $textMessageBuilder = new TextMessageBuilder("Mau tau siapa yang maju duluan ?\r\nKirim aja daftar nama - namanya.\r\ncontoh : Aziz, Ardika, Fatih.");
                     $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
 
                     // reply with sticker stickerMessageBuilder()
@@ -88,7 +88,7 @@ $app->get('/pushmessage', function($req, $res) use ($bot){
     $userId = 'Ua3aaca316b8b53a1632f7abfc1e6872c';
 
     // reply with MultiMessageBuilder()
-    $textMessageBuilder1 = new TextMessageBuilder('Maju Duluan\\nSiapa yang maju duluan ?\\nChatbot  untuk melakukan pengurutan nomor siapa yang maju duluan.');
+    $textMessageBuilder1 = new TextMessageBuilder('Maju Duluan\'nSiapa yang maju duluan ?\'nnChatbot  untuk melakukan pengurutan nomor siapa yang maju duluan.');
     $textMessageBuilder2 = new TextMessageBuilder('Line Chatbot by RSDH');
     $stickerMessageBuilder = new StickerMessageBuilder(1, 114);
 
@@ -98,6 +98,23 @@ $app->get('/pushmessage', function($req, $res) use ($bot){
     $multiMessageBuilder->add($stickerMessageBuilder);
     
     $result = $bot->pushMessage($userId, $multiMessageBuilder);
+   
+    return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+});
+
+$app->get('/multicast', function($req, $res) use ($bot)
+{
+    // list of users
+    $userList = [
+        'Ua3aaca316b8b53a1632f7abfc1e6872c',
+        'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+        'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+        'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+        'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'];
+
+    // send multicast message to user
+    $textMessageBuilder = new TextMessageBuilder('Multicasr Message');
+    $result = $bot->multicast($userList, $textMessageBuilder);
    
     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
 });
