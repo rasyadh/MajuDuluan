@@ -64,26 +64,13 @@ $app->post('/webhook', function($request, $response) use ($bot, $pass_signature)
                     // $result = $bot->replyText($event['replyToken'], $event['message']['text']);
 
                     // reply with replyMessage()
-                    // $textMessageBuilder = new TextMessageBuilder("Tebak Kode");
-                    // $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+                    $textMessageBuilder = new TextMessageBuilder("Mau tau siapa yang maju duluan ?\\nKirim aja daftar nama - namanya.\\ncontoh : Aziz, Ardika, Fatih.");
+                    $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
 
                     // reply with sticker stickerMessageBuilder()
                     // $packageId = 1; $stickerId = 13;
                     // $stickerMessageBuilder = new StickerMessageBuilder($packageId, $stickerId);
                     // $result = $bot->replyMessage($event['replyToken'], $stickerMessageBuilder);
-
-                    // reply with MultiMessageBuilder()
-                    $textMessageBuilder1 = new TextMessageBuilder('Maju Duluan
-
-                    Siapa yang maju duluan ?
-                    Chatbot  untuk melakukan pengurutan nomor siapa yang maju duluan.');
-                    $textMessageBuilder2 = new TextMessageBuilder('Line Chatbot by RSDH');
-                    $stickerMessageBuilder = new StickerMessageBuilder(1, 114);
-
-                    $multiMessageBuilder = new MultiMessageBuilder();
-                    $multiMessageBuilder->add($textMessageBuilder1);
-                    $multiMessageBuilder->add($textMessageBuilder2);
-                    $multiMessageBuilder->add($stickerMessageBuilder);
 
                     $result = $bot->replyMessage($event['replyToken'], $multiMessageBuilder);
 
@@ -93,6 +80,26 @@ $app->post('/webhook', function($request, $response) use ($bot, $pass_signature)
         }
     }
 
+});
+
+$app->get('/pushmessage', function($req, $res) use ($bot){
+
+    // send push message to user
+    $userId = 'Ua3aaca316b8b53a1632f7abfc1e6872c';
+
+    // reply with MultiMessageBuilder()
+    $textMessageBuilder1 = new TextMessageBuilder('Maju Duluan\\nSiapa yang maju duluan ?\\nChatbot  untuk melakukan pengurutan nomor siapa yang maju duluan.');
+    $textMessageBuilder2 = new TextMessageBuilder('Line Chatbot by RSDH');
+    $stickerMessageBuilder = new StickerMessageBuilder(1, 114);
+
+    $multiMessageBuilder = new MultiMessageBuilder();
+    $multiMessageBuilder->add($textMessageBuilder1);
+    $multiMessageBuilder->add($textMessageBuilder2);
+    $multiMessageBuilder->add($stickerMessageBuilder);
+    
+    $result = $bot->pushMessage($userId, $multiMessageBuilder);
+   
+    return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
 });
 
 $app->run();
