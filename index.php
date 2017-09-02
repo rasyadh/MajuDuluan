@@ -73,7 +73,10 @@ $app->post('/webhook', function($request, $response) use ($bot, $pass_signature)
                     // $result = $bot->replyMessage($event['replyToken'], $stickerMessageBuilder);
 
                     // reply with MultiMessageBuilder()
-                    $textMessageBuilder1 = new TextMessageBuilder('Maju Duluan\nSiapa yang maju duluan ?\n\nChatbot  untuk melakukan pengurutan nomor siapa yang maju duluan.\n\n');
+                    $textMessageBuilder1 = new TextMessageBuilder('Maju Duluan
+
+                    Siapa yang maju duluan ?
+                    Chatbot  untuk melakukan pengurutan nomor siapa yang maju duluan.');
                     $textMessageBuilder2 = new TextMessageBuilder('Line Chatbot by RSDH');
                     $stickerMessageBuilder = new StickerMessageBuilder(1, 114);
 
