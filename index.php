@@ -61,6 +61,7 @@ $app->post('/webhook', function($request, $response) use ($bot, $pass_signature)
 
             $userId = $data['source']['userId'];
             $profile = $bot->getProfile($userId);
+            
 
             if ($event['type'] == 'follow'){
 
@@ -187,6 +188,9 @@ $app->get('/profile', function($req, $res) use ($bot){
     // get user profile
     $userId = 'Ua3aaca316b8b53a1632f7abfc1e6872c';
     $result = $bot->getProfile($userId);
+
+    $profile = json_decode($result, true);
+    print_r($profile);
 
     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
 });
