@@ -113,13 +113,11 @@ duluan: (Menampilkan cara penggunaan).');
                                     $shuffle_text = $shuffle_text.($i + 1).'. '.$list[$i];
                                 }
                                 else {
-                                    $shuffle_text = $shuffle_text.($i + 1).'. '.$list[$i].'
-';   
+                                    $shuffle_text = $shuffle_text.($i + 1).'. '.$list[$i].'\n';   
                                 }
                             }
 
-                            $text_result = 'Urutan maju duluan : 
-'.$shuffle_text;
+                            $text_result = 'Urutan maju duluan : \n'.$shuffle_text;
 
                             $result = $bot->replyText($event['replyToken'], $text_result);
 
@@ -196,9 +194,11 @@ $app->get('/profile', function($req, $res) use ($bot){
     // get user profile
     $userId = 'Ua3aaca316b8b53a1632f7abfc1e6872c';
     $result = $bot->getProfile($userId);
-    echo $result->getJSONDecodedBody();
-    print_r($result->getJSONDecodedBody());
+    $hasil = $result->getJSONDecodedBody();
 
+    echo $hasil['displayName'].' first';
+    echo $hasil[displayName].' second';
+    
     //return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
 });
 
