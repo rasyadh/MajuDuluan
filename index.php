@@ -80,19 +80,69 @@ $app->post('/webhook', function($request, $response) use ($bot, $pass_signature)
             else if ($event['type'] == 'message'){
                 if ($event['source']['type'] == 'group' or $event['source']['type'] == 'room'){
                     // message from group
-                    if ($event['source']['userId']){
-                        $userId = $event['source']['userId'];
-                        $getprofile = $bot->getProfile($userId);
-                        $profile    = $getprofile->getJSONDecodedBody();
-                        $greetings  = new TextMessageBuilder("Hai, ".$profile['displayName']);
+                    if ($event['message']['type'] == 'text'){
+
+                        $text = $event['message']['text'];
+
+                        if (strpos($text, 'maju:') !== false){
+                            
+                            // reply for key maju:
+                            $text = str_replace("maju:", "", $text);
+                            $text = trim($text);
+                            
+                            if (strpos($text, ',') !== false){
+                                $temp[] = explode(",", $text);
+                                $list = [];
+                                
+                                for ($i = 0; $i < sizeof($temp[0]); $i++){
+                                    $list[$i] = preg_replace('/\s+/', "", $temp[0][$i]);
+                                }
+
+                                shuffle($list);
+
+                                $shuffle_text = "";
+                                for ($i = 0; $i < sizeof($list); $i++){
+                                    if ($i == sizeof($list) - 1){
+                                        $shuffle_text = $shuffle_text.($i + 1).". ".$list[$i];
+                                    }
+                                    else {
+                                        $shuffle_text = $shuffle_text.($i + 1).". ".$list[$i]."\n";   
+                                    }
+                                }
+
+                                $result = $bot->replyText($event['replyToken'], "Urutan maju duluan :\n".$shuffle_text);
+
+                                return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+                            }
+                            else {
+                                $result = $bot->replyText($event['replyToken'], "Contoh penggunaan keyword maju: \ncontoh : maju: Dion, Alfa, Reza");
+
+                                return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+                            }
+                        }
+
+                        else if (strpos($text, 'majuduluan:') !== false){
+                            // kweyword majuduluan:
+                            $textMessageBuilder1 = new TextMessageBuilder("Maju Duluan\nChatbot untuk melakukan pengurutan nomor siapa yang maju duluan.\n\nMau tau siapa yang maju duluan ? Kirim aja daftar nama - namanya.");
+                            $textMessageBuilder2 = new TextMessageBuilder("Berikut beberapa keyword chatbot yang dapat digunakan :\n\nmaju: (Acak urutan maju)\n\nmajuduluan: (Informasi bot)\n\nhelp: (Cara penggunaan)");
+                            $textMessageBuilder3 = new TextMessageBuilder("Line Chatbot by RSDH");
+
+                            $multiMessageBuilder = new MultiMessageBuilder();
+                            $multiMessageBuilder->add($textMessageBuilder1);
+                            $multiMessageBuilder->add($textMessageBuilder2);
+                            $multiMessageBuilder->add($textMessageBuilder3);
+                            
+                            $result = $bot->replyMessage($event['replyToken'], $multiMessageBuilder);
                         
-                        $result = $bot->replyMessage($event['replyToken'], $greetings);
-                        return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-                    }
-                    else {
-                        // send same message as reply to user
-                        $result = $bot->replyText($event['replyToken'], $event['message']['text']);
-                        return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+                            return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());                
+                        }
+                        
+                        else if (strpos($text, 'help:') !== false){
+                            // keyword help:
+                            $result = $bot->replyText($event['replyToken'], "Cara penggunaan keyword bot :\nmaju: Dion, Alfa, Reza\nmajuduluan: (Menampilkan informasi bot)\nhelp: (Menampilkan cara penggunaan)");
+                        
+                            return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+                        }
                     }
                 }
                 else {
