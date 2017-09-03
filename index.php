@@ -242,7 +242,6 @@ $app->post('/webhook', function($request, $response) use ($bot, $pass_signature)
             }
         }
     }
-
 });
 
 // Push Message
