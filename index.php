@@ -77,6 +77,23 @@ $app->post('/webhook', function($request, $response) use ($bot, $pass_signature)
                 return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());                
             }
 
+            else if ($event['type'] == 'join'){
+                $textMessageBuilder1 = new TextMessageBuilder("Maju Duluan\nChatbot untuk melakukan pengurutan nomor siapa yang maju duluan.\n\nMau tau siapa yang maju duluan ? Kirim aja daftar nama - namanya.");
+                $textMessageBuilder2 = new TextMessageBuilder("Berikut beberapa keyword chatbot yang dapat digunakan :\n\nmaju: (Acak urutan maju)\n\nmajuduluan: (Informasi bot)\n\nhelp: (Cara penggunaan)");
+                $textMessageBuilder3 = new TextMessageBuilder("Line Chatbot by RSDH");
+                $stickerMessageBuilder = new StickerMessageBuilder(1, 114);
+
+                $multiMessageBuilder = new MultiMessageBuilder();
+                $multiMessageBuilder->add($textMessageBuilder1);
+                $multiMessageBuilder->add($textMessageBuilder2);
+                $multiMessageBuilder->add($textMessageBuilder3);
+                $multiMessageBuilder->add($stickerMessageBuilder);
+                
+                $result = $bot->replyMessage($event['replyToken'], $multiMessageBuilder);
+            
+                return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());                
+            }
+
             else if ($event['type'] == 'message'){
                 if ($event['source']['type'] == 'group' or $event['source']['type'] == 'room'){
                     // message from group
@@ -145,6 +162,7 @@ $app->post('/webhook', function($request, $response) use ($bot, $pass_signature)
                         }
                     }
                 }
+
                 else {
                     // message from user
                     if ($event['message']['type'] == 'text'){
