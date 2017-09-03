@@ -198,9 +198,10 @@ $app->get('/profile', function($req, $res) use ($bot){
     $result = $bot->getProfile($userId);
 
     $profile = json_decode($result, true);
-    print_r($profile);
 
-    // return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+    $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+
+    return $result;
 });
 
 $app->run();
