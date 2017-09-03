@@ -61,12 +61,11 @@ $app->post('/webhook', function($request, $response) use ($bot, $pass_signature)
             if ($event['type'] == 'follow'){
 
                 $textMessageBuilder1 = new TextMessageBuilder('Maju Duluan
-                Chatbot untuk melakukan pengurutan nomor siapa yang maju duluan.
-                
-                Mau tau siapa yang maju duluan ?
-                Kirim aja daftar nama - namanya.');
+Chatbot untuk melakukan pengurutan nomor siapa yang maju duluan.
+Mau tau siapa yang maju duluan ? Kirim aja daftar nama - namanya.');
                 $textMessageBuilder2 = new TextMessageBuilder('Penggunaan chatbot seperti ini :
-                maju: (Acak urutan maju) , contoh : maju: Aziz, Ardika, Fatih\nduluan: (Menampilkan cara penggunaan).');
+maju: (Acak urutan maju) , contoh : maju: Aziz, Ardika, Fatih
+duluan: (Menampilkan cara penggunaan).');
                 $textMessageBuilder3 = new TextMessageBuilder('Line Chatbot by RSDH');
                 $stickerMessageBuilder = new StickerMessageBuilder(1, 114);
 
@@ -103,7 +102,7 @@ $app->post('/webhook', function($request, $response) use ($bot, $pass_signature)
 
                             $sorted_text = '';
                             for ($i = 0; $i < sizeof($list); $i++){
-                                $sorted_text = $sorted_text.($i + 1).'. '.$list[$i].' <br/>';
+                                $sorted_text = $sorted_text.($i + 1).'. '.$list[$i].'  ';
                             }
 
                             $result = $bot->replyText($event['replyToken'], $sorted_text);
@@ -112,7 +111,7 @@ $app->post('/webhook', function($request, $response) use ($bot, $pass_signature)
                         }
                         else {
                             $result = $bot->replyText($event['replyToken'], 'Penggunaan maju:
-                            contoh : Maju: Aziz, Ardika, Fatih');
+contoh : Maju: Aziz, Ardika, Fatih');
 
                             return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                         }
@@ -121,13 +120,11 @@ $app->post('/webhook', function($request, $response) use ($bot, $pass_signature)
 
                         // reply for key duluan:
                         $textMessageBuilder1 = new TextMessageBuilder('Maju Duluan
-                        Chatbot untuk melakukan pengurutan nomor siapa yang maju duluan.
-                        
-                        Mau tau siapa yang maju duluan ?
-                        Kirim aja daftar nama - namanya.');
+Chatbot untuk melakukan pengurutan nomor siapa yang maju duluan.
+Mau tau siapa yang maju duluan ? Kirim aja daftar nama - namanya.');
                         $textMessageBuilder2 = new TextMessageBuilder('Penggunaan chatbot seperti ini :
-                        maju: (Acak urutan maju) , contoh : maju: Aziz, Ardika, Fatih
-                        :duluan (Menampilkan cara penggunaan).');
+maju: (Acak urutan maju) , contoh : maju: Aziz, Ardika, Fatih
+:duluan (Menampilkan cara penggunaan).');
                         $textMessageBuilder3 = new TextMessageBuilder('Line Chatbot by RSDH');
 
                         $multiMessageBuilder = new MultiMessageBuilder();
