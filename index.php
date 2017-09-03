@@ -58,13 +58,18 @@ $app->post('/webhook', function($request, $response) use ($bot, $pass_signature)
 
     if (is_array($data['events'])){
         foreach ($data['events'] as $event){
+
+            $userId = $data['source']['userId'];
+            $profile = $bot->getProfile($userId);
+
             if ($event['type'] == 'follow'){
 
                 $textMessageBuilder1 = new TextMessageBuilder('Maju Duluan
 Chatbot untuk melakukan pengurutan nomor siapa yang maju duluan.
+
 Mau tau siapa yang maju duluan ? Kirim aja daftar nama - namanya.');
                 $textMessageBuilder2 = new TextMessageBuilder('Penggunaan chatbot seperti ini :
-maju: (Acak urutan maju) , contoh : maju: Aziz, Ardika, Fatih
+maju: (Acak urutan maju), contoh : maju: Aziz, Ardika, Fatih
 duluan: (Menampilkan cara penggunaan).');
                 $textMessageBuilder3 = new TextMessageBuilder('Line Chatbot by RSDH');
                 $stickerMessageBuilder = new StickerMessageBuilder(1, 114);
@@ -79,7 +84,8 @@ duluan: (Menampilkan cara penggunaan).');
             
                 return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());                
             }
-            if ($event['type'] == 'message'){
+
+            else if ($event['type'] == 'message'){
                 if ($event['message']['type'] == 'text'){
 
                     $text = $event['message']['text'];
@@ -102,7 +108,8 @@ duluan: (Menampilkan cara penggunaan).');
 
                             $sorted_text = '';
                             for ($i = 0; $i < sizeof($list); $i++){
-                                $sorted_text = $sorted_text.($i + 1).'. '.$list[$i].'  ';
+                                $sorted_text = $sorted_text.($i + 1).'. '.$list[$i].'
+';
                             }
 
                             $result = $bot->replyText($event['replyToken'], $sorted_text);
@@ -121,9 +128,10 @@ contoh : Maju: Aziz, Ardika, Fatih');
                         // reply for key duluan:
                         $textMessageBuilder1 = new TextMessageBuilder('Maju Duluan
 Chatbot untuk melakukan pengurutan nomor siapa yang maju duluan.
+
 Mau tau siapa yang maju duluan ? Kirim aja daftar nama - namanya.');
                         $textMessageBuilder2 = new TextMessageBuilder('Penggunaan chatbot seperti ini :
-maju: (Acak urutan maju) , contoh : maju: Aziz, Ardika, Fatih
+maju: (Acak urutan maju), contoh : maju: Aziz, Ardika, Fatih
 :duluan (Menampilkan cara penggunaan).');
                         $textMessageBuilder3 = new TextMessageBuilder('Line Chatbot by RSDH');
 
@@ -143,6 +151,7 @@ maju: (Acak urutan maju) , contoh : maju: Aziz, Ardika, Fatih
 
 });
 
+// Push Message
 $app->get('/pushmessage', function($req, $res) use ($bot){
 
     // send push message to user
@@ -155,6 +164,7 @@ $app->get('/pushmessage', function($req, $res) use ($bot){
     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
 });
 
+// Multicast
 $app->get('/multicast', function($req, $res) use ($bot)
 {
     // list of users
@@ -169,6 +179,15 @@ $app->get('/multicast', function($req, $res) use ($bot)
     $textMessageBuilder = new TextMessageBuilder('Multicasr Message');
     $result = $bot->multicast($userList, $textMessageBuilder);
    
+    return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+});
+
+// Profile
+$app->get('/profile', function($req, $res) use ($bot){
+    // get user profile
+    $userId = 'Ua3aaca316b8b53a1632f7abfc1e6872c';
+    $result = $bot->getProfile($userId);
+
     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
 });
 
