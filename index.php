@@ -122,7 +122,7 @@ $app->post('/webhook', function($request, $response) use ($bot, $pass_signature)
                             return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                         }
                     }
-                    else if (str_pos($text. "majuduluan:") !== false){
+                    else if (str_pos($text, "majuduluan:") !== false){
                         // kweyword majuduluan:
                         $textMessageBuilder1 = new TextMessageBuilder("Maju Duluan\nChatbot untuk melakukan pengurutan nomor siapa yang maju duluan.\n\nMau tau siapa yang maju duluan ? Kirim aja daftar nama - namanya.");
                         $textMessageBuilder2 = new TextMessageBuilder("Berikut beberapa keyword chatbot yang dapat digunakan :\n\nmaju: (Acak urutan maju)\n\nmajuduluan: (Informasi bot)\n\nhelp: (Cara penggunaan)");
