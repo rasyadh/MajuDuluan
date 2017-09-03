@@ -59,10 +59,6 @@ $app->post('/webhook', function($request, $response) use ($bot, $pass_signature)
     if (is_array($data['events'])){
         foreach ($data['events'] as $event){
 
-            $userId = $data['source']['userId'];
-            $profile = $bot->getProfile($userId);
-            
-
             if ($event['type'] == 'follow'){
 
                 $textMessageBuilder1 = new TextMessageBuilder("Maju Duluan\nChatbot untuk melakukan pengurutan nomor siapa yang maju duluan.\n\nMau tau siapa yang maju duluan ? Kirim aja daftar nama - namanya.");
@@ -86,7 +82,7 @@ $app->post('/webhook', function($request, $response) use ($bot, $pass_signature)
 
                     $text = $event['message']['text'];
 
-                    if (strpos($text, "maju:") !== false){
+                    if (strpos($text, 'maju:') !== false){
                         
                         // reply for key maju:
                         $text = str_replace("maju:", "", $text);
@@ -123,7 +119,7 @@ $app->post('/webhook', function($request, $response) use ($bot, $pass_signature)
                         }
                     }
 
-                    if (str_pos($text, "majuduluan:") !== false){
+                    if (strpos($text, 'majuduluan:') !== false){
                         // kweyword majuduluan:
                         $textMessageBuilder1 = new TextMessageBuilder("Maju Duluan\nChatbot untuk melakukan pengurutan nomor siapa yang maju duluan.\n\nMau tau siapa yang maju duluan ? Kirim aja daftar nama - namanya.");
                         $textMessageBuilder2 = new TextMessageBuilder("Berikut beberapa keyword chatbot yang dapat digunakan :\n\nmaju: (Acak urutan maju)\n\nmajuduluan: (Informasi bot)\n\nhelp: (Cara penggunaan)");
@@ -139,7 +135,7 @@ $app->post('/webhook', function($request, $response) use ($bot, $pass_signature)
                         return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());                
                     }
                     
-                    if (strpos($text, "help:") !== false){
+                    if (strpos($text, 'help:') !== false){
                         // keyword help:
                         $result = $bot->replyText($event['replyToken'], "Cara penggunaan keyword bot :\nmaju: Dion, Alfa, Reza\nmajuduluan: (Menampilkan informasi bot)\nhelp: (Menampilkan cara penggunaan)");
                     
