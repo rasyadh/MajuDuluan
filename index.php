@@ -113,13 +113,12 @@ duluan: (Menampilkan cara penggunaan).');
                                     $shuffle_text = $shuffle_text.($i + 1).'. '.$list[$i];
                                 }
                                 else {
-                                    $shuffle_text = $shuffle_text.($i + 1).'. '.$list[$i].'\n';   
+                                    $shuffle_text = $shuffle_text.($i + 1).'. '.$list[$i].'
+';   
                                 }
                             }
-
-                            $text_result = 'Urutan maju duluan : \n'.$shuffle_text;
-
-                            $result = $bot->replyText($event['replyToken'], $text_result);
+                            
+                            $result = $bot->replyText($event['replyToken'], 'Urutan maju duluan :\n'.$shuffle_text);
 
                             return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                         }
@@ -153,8 +152,8 @@ maju: (Acak urutan maju), contoh : maju: Aziz, Ardika, Fatih
                     }
                 }
                 else if ($event['message']['type'] == 'image' or $event['message']['type'] == 'video' or $event['message']['type'] == 'audio' or $event['message']['type'] == 'file'){
-                    $basePpath = $request->getUri()->getBaseUrl();
-                    $contentUrl = $basePath."/content/".$event['message']['id'];
+                    $basePath  = $request->getUri()->getBaseUrl();
+                    $contentURL  = $basePath."/content/".$event['message']['id'];
                     $contentType = ucfirst($event['message']['type']);
                     $result = $bot->replyText($event['replyToken'], $contentType." yang kamu kirim bisa diakses di link ini :\n".$contentUrl);
 
