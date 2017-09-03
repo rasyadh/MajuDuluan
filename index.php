@@ -118,7 +118,10 @@ duluan: (Menampilkan cara penggunaan).');
                                 }
                             }
 
-                            $result = $bot->replyText($event['replyToken'], $shuffle_text);
+                            $text_result = 'Urutan maju duluan : 
+'.$shuffle_text;
+
+                            $result = $bot->replyText($event['replyToken'], $text_result);
 
                             return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                         }
