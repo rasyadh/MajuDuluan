@@ -105,15 +105,20 @@ duluan: (Menampilkan cara penggunaan).');
                                 $list[$i] = preg_replace('/\s+/', '', $temp[0][$i]);
                             }
 
-                            sort($list);
+                            shuffle($list);
 
-                            $sorted_text = '';
+                            $shuffle_text = '';
                             for ($i = 0; $i < sizeof($list); $i++){
-                                $sorted_text = $sorted_text.($i + 1).'. '.$list[$i].'
-';
+                                if ($i == sizeof($list) - 1){
+                                    $shuffle_text = $shuffle_text.($i + 1).'. '.$list[$i];
+                                }
+                                else {
+                                    $shuffle_text = $shuffle_text.($i + 1).'. '.$list[$i].'
+';   
+                                }
                             }
 
-                            $result = $bot->replyText($event['replyToken'], $sorted_text);
+                            $result = $bot->replyText($event['replyToken'], $shuffle_text);
 
                             return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                         }
@@ -190,9 +195,9 @@ $app->get('/profile', function($req, $res) use ($bot){
     $result = $bot->getProfile($userId);
 
     $profile = json_decode($result, true);
-    print_r($profile);
+    $print_r($profile);
 
-    return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+    // return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
 });
 
 $app->run();
