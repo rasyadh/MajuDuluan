@@ -107,14 +107,13 @@ duluan: (Menampilkan cara penggunaan).');
 
                             shuffle($list);
 
-                            $shuffle_text = '';
+                            $shuffle_text = "";
                             for ($i = 0; $i < sizeof($list); $i++){
                                 if ($i == sizeof($list) - 1){
-                                    $shuffle_text = $shuffle_text.($i + 1).'. '.$list[$i];
+                                    $shuffle_text = $shuffle_text.($i + 1).". ".$list[$i];
                                 }
                                 else {
-                                    $shuffle_text = $shuffle_text.($i + 1).'. '.$list[$i].'
-';   
+                                    $shuffle_text = $shuffle_text.($i + 1).". ".$list[$i]."\n";   
                                 }
                             }
 
@@ -123,8 +122,7 @@ duluan: (Menampilkan cara penggunaan).');
                             return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                         }
                         else {
-                            $result = $bot->replyText($event['replyToken'], 'Penggunaan maju:
-contoh : Maju: Aziz, Ardika, Fatih');
+                            $result = $bot->replyText($event['replyToken'], "Penggunaan maju: \ncontoh : Maju: Aziz, Ardika, Fatih");
 
                             return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                         }
