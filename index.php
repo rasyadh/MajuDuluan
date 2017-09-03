@@ -196,12 +196,10 @@ $app->get('/profile', function($req, $res) use ($bot){
     // get user profile
     $userId = 'Ua3aaca316b8b53a1632f7abfc1e6872c';
     $result = $bot->getProfile($userId);
+    echo $result;
+    print_r $result;
 
-    $profile = json_decode($result, true);
-
-    $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-
-    return $result;
+    //return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
 });
 
 $app->run();
